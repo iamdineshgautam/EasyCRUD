@@ -3,9 +3,9 @@ pipeline {
         label 'worker'
     }
 
-    // tools{
-    //     maven 'mvn'
-    // }
+    tools{
+        maven 'mvn'
+    }
 
     // environment {
     //     my_aws_cred = credentials('aws-access')
@@ -20,18 +20,18 @@ pipeline {
             }
         }
 
-        // stage('Build'){
-        //     steps {
-        //         dir('backend'){
-        //             sh 'mvn clean package'
-        //         }
-        //     }
-        //     post {
-        //         success {
-        //             archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
-        //         }
-        //     }
-        // }
+        stage('Build'){
+            steps {
+                dir('backend'){
+                    sh 'mvn clean package'
+                }
+            }
+            // post {
+            //     success {
+            //         archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
+            //     }
+            // }
+        }
 
         // stage('Artifact to S3') {
         //     steps {
