@@ -77,19 +77,17 @@ pipeline {
                     aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 231101979902.dkr.ecr.ap-south-1.amazonaws.com
                     docker tag backend:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
                     docker push ${ECR_REPO}:${BUILD_NUMBER}
-                    // docker tag backend:latest 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
-                    // docker push 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
                 '''
             }
         }
 
-        // stage('Update Manifest') {
-        //     steps {
-        //         sh '''
-        //             sed -i "s|image: .*|image: ${ECR_REPO}:${BUILD_NUMBER}|" k8s/backend/backend-deployment.yaml
-        //         '''
-        //     }
-        // }
+        stage('Update Manifest') {
+            steps {
+                sh '''
+                    sed -i "s|image: .*|image: ${ECR_REPO}:${BUILD_NUMBER}|" k8s/backend/backend-deployment.yaml
+                '''
+            }
+        }
 
         // stage("Push change to GITHUB"){
         //     steps {
