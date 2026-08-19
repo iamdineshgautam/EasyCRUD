@@ -33,14 +33,14 @@ pipeline {
             }
         }
 
-        // stage('Artifact to S3') {
-        //     steps {
-        //         sh '''
-        //             sudo snap install aws-cli --classic
-        //             aws s3 cp backend/target/*.jar s3://mayurcbz.spacee/Artifact/student.war
-        //         '''
-        //     }
-        // }
+        stage('Artifact to S3') {
+            steps {
+                sh '''
+                    sudo snap install aws-cli --classic
+                    aws s3 cp backend/target/*.jar s3://deploywithdinesh.space/Artifact/student.war
+                '''
+            }
+        }
 
         // stage('SonarQube Analysis') {
         //     steps {
