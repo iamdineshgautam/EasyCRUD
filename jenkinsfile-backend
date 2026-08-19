@@ -7,10 +7,10 @@ pipeline {
         maven 'mvn'
     }
 
-    // environment {
-    //     my_aws_cred = credentials('aws-access')
-    //     ECR_REPO = '525382241025.dkr.ecr.us-west-2.amazonaws.com/backend'
-    // }
+    environment {
+        my_aws_cred = credentials('aws-access')
+        // ECR_REPO = '525382241025.dkr.ecr.us-west-2.amazonaws.com/backend'
+    }
 
     stages {
         stage('Checkout'){
