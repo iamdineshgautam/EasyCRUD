@@ -26,11 +26,11 @@ pipeline {
                     sh 'mvn clean package'
                 }
             }
-            // post {
-            //     success {
-            //         archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
-            //     }
-            // }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
+                }
+            }
         }
 
         // stage('Artifact to S3') {
