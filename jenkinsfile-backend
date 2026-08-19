@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         my_aws_cred = credentials('aws-access')
-        // ECR_REPO = '525382241025.dkr.ecr.us-west-2.amazonaws.com/backend'
+        ECR_REPO = '231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend'
     }
 
     stages {
@@ -75,10 +75,10 @@ pipeline {
             steps {
                 sh '''
                     aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 231101979902.dkr.ecr.ap-south-1.amazonaws.com
-                    // docker tag backend:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
-                    // docker push ${ECR_REPO}:${BUILD_NUMBER}
-                    docker tag backend:latest 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
-                    docker push 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
+                    docker tag backend:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
+                    docker push ${ECR_REPO}:${BUILD_NUMBER}
+                    // docker tag backend:latest 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
+                    // docker push 231101979902.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
                 '''
             }
         }
