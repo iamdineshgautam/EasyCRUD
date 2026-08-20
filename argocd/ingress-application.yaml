@@ -1,23 +1,23 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
 
-metadata:
-  name: easycrud-ingress
-  namespace: argocd
+# metadata:
+#   name: easycrud-ingress
+#   namespace: argocd
 
-spec:
-  project: default
+# spec:
+#   project: default
 
-  source:
-    repoURL: https://github.com/iamdineshgautam/EasyCRUD.git
-    targetRevision: main
-    path: k8s/ingress
+#   source:
+#     repoURL: https://github.com/iamdineshgautam/EasyCRUD.git
+#     targetRevision: main
+#     path: k8s/ingress
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: default
 
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
