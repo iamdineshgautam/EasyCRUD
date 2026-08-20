@@ -13,6 +13,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout'){
             steps {
                 git branch: 'main', credentialsId: 'github-cred', url: 'https://github.com/iamdineshgautam/EasyCRUD.git'
@@ -70,6 +71,23 @@ pipeline {
             }
         }
 
+        stage('Trivy image scanning') {
+            steps {
+                sh '''
+                //   trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 0 backend:${BUILD_NUMBER}
+                TMPDIR=/opt/trivy-tmp trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 1 backend:${BUILD_NUMBER}
+                '''
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    input message: 'Approve deployment to Kubernetes?', ok: 'Approve'
+                }
+            }
+        }
+
         stage('Push To ECR') {
             steps {
                 sh '''
@@ -109,6 +127,22 @@ pipeline {
                     '''
                 }
             }
+        }
+
+        stage('Argocd Deployment') {
+            steps {
+                sh '''
+                    sudo aws eks update-kubeconfig --name my-eks-cluster1 --region us-west-2
+                    sudo kubectl apply -f argocd/backend-application.yaml
+                    sudo kubectl get pods -n argocd
+                    sudo kubectl get application -n argocd
+                '''
+            }
+        }
+    }
+     post {
+        success {
+            cleanWs()
         }
     }
 }
